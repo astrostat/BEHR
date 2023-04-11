@@ -1,0 +1,114 @@
+******************************************************************************
+* This is a tutorial guide for BEHR (Bayesian Estimation of Hardness Ratios) *
+*                                                                            *
+* Park, T., Kashyap, V., Siemiginowska, A., van Dyk, D., Zezas, A.,          *
+*   Heinke, C., and Wargelin, B (2006). Bayesian Estimation of Hardness      *
+*   Ratios: Modeling and Computations. The Astrophysical Journal, 652, 610.  *
+*                                                                            *
+* If you have any comment, email Taeyoung Park at tpark @ stat.harvard.edu.  *
+******************************************************************************
+
+*============================================================================*
+1. In a command line, type "make BEHR" to compile the code, i.e.,
+
+> make BEHR
+*============================================================================*
+2. Just type "./BEHR" and you will see which arguments to input on the screen.
+
+> ./BEHR
+
+   Type "./BEHR help" and you can see full descriptions of the arguments.
+
+> ./BEHR help
+*============================================================================*
+3. In order to use the program, you need to type "./BEHR" with 6 required 
+   arguments in any order. These arguments correspond to 
+
+   - softsrc=  : observed source counts in the soft band.
+   - hardsrc=  : observed source counts in the hard band.
+   - softbkg=  : background counts in the soft band.
+   - hardbkg=  : background counts in the hard band.
+   - softarea= : soft background area ratio. 
+   - hardarea= : hard background area ratio.
+
+> ./BEHR softsrc=5 hardsrc=5 softbkg=10 hardbkg=10 softarea=10 hardarea=10
+*============================================================================*
+4. In addition to the required arguments, you can input 20 optional arguments 
+   that correspond to
+
+   - softeff=  : soft effective area. (softeff=1 by default)
+   - hardeff=  : hard effective area. (hardeff=1 by default) 
+   - softidx=  : soft index, i.e., the shape parameter of a gamma prior dist'n 
+                 for the soft source intensity. (softidx=0.5 by default)
+   - hardidx=  : hard index, i.e., the shape parameter of a gamma prior dist'n
+                 for the hard source intensity. (hardidx=0.5 by default)
+   - softscl=  : soft scale, i.e., the scale parameter of a gamma prior dist'n 
+                 for the soft source intensity. (softscl=0.0 by default)
+   - hardscl=  : hard scale, i.e., the scale parameter of a gamma prior dist'n 
+                 for the hard source intensity. (hardscl=0.0 by default)
+   - softtbl=  : filename of a tabulated prior for soft band, which consists
+	         of the number of the soft source intensity and the prior
+	         distribution of the binned soft source intensity.  
+	         E.g., tblprior_soft.txt. (hardtbl or unused by default) 
+   - hardtbl=  : filename of a tabulated prior for hard band, which consists
+                 of the number of the hard source intensity and the prior
+                 distribution of the binned hard source intensity.   
+                 E.g., tblprior_hard.txt. (softtbl or unused by default)	
+   - level=    : confidence level. (level=68.0 by default) 
+   - algo=     : should be either gibbs or quad. (algo=gibbs by default)
+   - details=  : detailed descriptions? (true/false) (details=false by default)
+   - post=     : posterior distributions of lamS and lamH? (true/false) 
+*----------------------------------------------------------------------------*
+   *** if algo=gibbs 
+   - nsim=     : the number of draws. (nsim=10000 by default)
+   - nburnin=  : the number of burn-in draws. (nburnin=5000 by default)
+   - HPD=      : should be true or false. (HPD=true by defalut)
+     + if HPD=true        : computes a HPD (Highest Posterior Density) interval.
+     + if HPD=false       : computes an equal-tail posterior interval. 
+*----------------------------------------------------------------------------*
+   *** if algo=quad  
+   - nbins=    : the number of bins to evaluate HR. (nbins=1000 by default) 
+*----------------------------------------------------------------------------* 
+   *** output files    
+   - output=   : output file name. (output=none by default)
+     + if output=none     : no output file will be generated.
+     + if output=filename : filename.txt will be generated. (BEHR by default)
+
+   - outputR=  : should be true or false. (outputR=false by default) 	
+     + if outputR=true    : the outputs related to R=(S/H) are stored in either 
+			    filename_R.txt or BEHR_R.txt by default:
+			    mode, mean, median, lowerbound, upperbound of R,
+			    mode of S, and mode of H.
+
+   - outputHR= : should be true or false. (outputHR=false by default) 
+     + if outputHR=true   : the outputs related to HR=(H-S)/(H+S) are stored in 
+			    either filename_HR.txt or BEHR_HR.txt by default:
+			    mode, mean, median, lowerbound, upperbound of HR, 
+			    mode of (H-S), and mode of (H+S).
+
+   - outputC=  : should be true or false. (outputC=false by default) 
+     + if outputC=true    : the outputs related to C=log10(S/H) are stored in 
+			    either filename_C.txt or BEHR_C.txt by default:
+			    mode, mean, median, lowerbound, upperbound of C,
+			    mode of log10(S), and mode of log10(H).
+
+   - outputMC= : shoube be true or false if algo=gibbs. (outputMC=false by default)
+     + if outputMC=true   : the Monte draws of lamS and lamH are stored in 
+  			    either filename_draws.txt or BEHR_draws.txt by 
+			    default. By using this file, you can plot the
+               		    posterior distribution of the color-color diagram.
+
+   - outputPr= : should be true or false if algo=quad. (outputPr=false by default)
+     + if outputPr=true   : the discrete points and probabilities of R, HR, C, 
+			    S, and H are stored in either filename_prob.txt
+			    or BEHR_prob.txt by default: R, prob_R, HR, 
+			    prob_HR, C, prob_C, S, prob_S, H, and prob_H.
+			    By using this file, you can actually plot the 
+			    posterior distribution of each hardness ratio.
+*----------------------------------------------------------------------------*
+> ./BEHR softsrc=5 hardsrc=5 softbkg=10 hardbkg=10 softarea=10 hardarea=10 softeff=0.9 
+hardeff=0.9 softidx=1 hardidx=1 softscl=0.5 hardscl=0.5 level=68.5 algo=quad nbins=500 
+output=example outputR=true outputHR=false outputC=false outputPr=true details=true post=true
+*============================================================================*
+5. Enjoy! =)
+*============================================================================*
