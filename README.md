@@ -19,9 +19,9 @@ which will create an executable named BEHR. It may be necessary to delete the "-
 it will print a more detailed description of the parameters before exiting.
 
 NOTES ON COMPILATION ERRORS: People that try to compile with gfortran may encounter some compilation errors on macOS. Here is a brief rundown of the kind of things to try to fix them.
--- The gfortran compiler listed in the Makefile in the tar file is v4.3 of the macports port. Change it to whichever one you have installed. A good repository of the latest versions is at hpc.sourceforge.net. (Be sure to update gcc too.)
--- The Makefile targets the i386 architecture. The -arch i386 flags to gcc can be omitted from newer versions of macOS, or explicitly included with -arch x86_64.
--- If you get errors of the sort
+	-- The gfortran compiler listed in the Makefile in the tar file is v4.3 of the macports port. Change it to whichever one you have installed. A good repository of the latest versions is at hpc.sourceforge.net. (Be sure to update gcc too.)
+	-- The Makefile targets the i386 architecture. The -arch i386 flags to gcc can be omitted from newer versions of macOS, or explicitly included with -arch x86_64.
+	-- If you get errors of the sort
 pquad.f:1.72:
       subroutine pquad (f, a, b, absacc, relacc, minrul, maxrul,ruleno, 
 Error: Invalid character in name at (1)
@@ -31,7 +31,7 @@ This is due to what appears to be a different interpretation of the continuation
 to
       subroutine pquad (f, a, b, absacc, relacc, minrul,maxrul,ruleno,
      &quads, nevals, ercode)
--- If you have macports installed, the gcc assembler in /opt/local/bin might interfere with the compilation. To get around it, do
-prompt> set newpath = `echo $PATH | sed 's,/opt/local/bin:,,g'`
-prompt> set path = ( /usr/bin $newpath )
-prompt> make clean ; make BEHR
+	-- If you have macports installed, the gcc assembler in /opt/local/bin might interfere with the compilation. To get around it, do
+		prompt> set newpath = `echo $PATH | sed 's,/opt/local/bin:,,g'`
+		prompt> set path = ( /usr/bin $newpath )
+		prompt> make clean ; make BEHR
